@@ -1,4 +1,4 @@
-# 雙機械手臂協作系統
+# 視覺導引雙臂協同搬運系統
 
 兩支 PhantomX Pincher 手臂協作，用吸盤把瓶蓋從 A 區經 B 區交接，放到 C 區八個格位。整合了 ROS 2 Jazzy、MoveIt 2、Gazebo Harmonic、三相機 OpenCV，實機由一片 CM-530 控制八顆 AX-12A。
 

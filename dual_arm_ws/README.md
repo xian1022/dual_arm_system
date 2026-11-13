@@ -1,4 +1,4 @@
-# 雙機械手臂 ROS 2 系統：安裝與使用
+# 視覺導引雙臂協同搬運系統：安裝與使用
 
 兩支 PhantomX Pincher 手臂協作，把瓶蓋從 A 區經 B 區交接，放到 C 區的八個格位。系統使用 ROS 2 Jazzy、MoveIt 2、Gazebo Harmonic，實機由一片 CM-530 控制八顆 AX-12A。
 
