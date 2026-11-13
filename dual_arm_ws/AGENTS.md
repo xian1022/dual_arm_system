@@ -35,7 +35,7 @@
 
 **來源與紀錄：**
 
-- `third_party/` 不可修改，需要整合時複製到 `src/`。四個上游是 git submodule，版本鎖定在 `docs/sources.lock.json`；`moveit2` 只是本機除錯用，沒有納入版本控制。
+- `third_party/` 不可修改，需要整合時複製到 `src/`。上游都是 git submodule，版本鎖定在 `docs/sources.lock.json`；`moveit2` 只是本機除錯用，沒有納入版本控制。
 - 指令的原始輸出放在 `docs/evidence/`，保留失敗紀錄，不要覆蓋成成功。
 - 改了模型、launch、world 或校正，要重跑受影響的檢查。
 - 修改 C/C++ 時，套用 `C:/Users/39165/.codex/skills` 的 Trail of Bits 技能，並跑 sanitizer。
