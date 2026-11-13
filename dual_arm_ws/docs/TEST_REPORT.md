@@ -1,5 +1,15 @@
 # Evidence report — 2026-11-08
 
+## 2026-11-13 Prototype pick height 2 mm lower
+
+Prototype `heights` all 2 mm lower after the field report that the cup stopped above the cap. Details: evidence/prototype_z_20261113/README.md.
+
+| Check | Result | Evidence / scope |
+|---|---|---|
+| Prototype config loads with the new heights | PASS | load_prototype.txt |
+| Unit tests coordinator / HMI | PASS | 328 / 307 |
+| Pick on the real arms at the new height | NOT_RUN | Orin needs pull and rebuild |
+
 ## 2026-11-13 Sync with Dual-Arm-TEST-2.0 (E0) and env_camera_vision 6b3d5c1
 
 E0 suction commits fast-forwarded; env_scene at `6b3d5c1` with the local overlay kept; prototype C slots at the measured rows. Details: evidence/sync_20261113/README.md.

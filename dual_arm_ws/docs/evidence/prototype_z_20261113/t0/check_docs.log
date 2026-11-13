@@ -1,0 +1,2 @@
+$ python3 scripts/check_docs.py docs/evidence/prototype_z_20261113/t0/check_docs.json
+PASS: 65 Markdown files, 0 broken links, 36 layout statements to review

@@ -2,7 +2,12 @@
 
 Current status by work package is in MODIFICATION_PLAN.md section 6. Each section below records one result at the time it was made, so later sections supersede what older ones list as not run.
 
-## Latest result: sync with the two upstream repos (prototype first)
+## Latest result: prototype pick height 2 mm lower
+
+- 2026-11-13, field report: on the real arms the cup stopped about 2 mm above the cap and could not pick it. Prototype `heights` all 2 mm lower: surface 0.012, contact 0.0223, release 0.0233, approach 0.052 (cap height unchanged; lowering only the contact would break the "cap top <= contact" check). Simulation and strict hardware unchanged.
+- Config loads; coordinator 328 and HMI 307 tests pass (evidence/prototype_z_20261113/). Not rerun on the real arms.
+
+## Earlier result: sync with the two upstream repos (prototype first)
 
 - 2026-11-13. User decision: work on the prototype mode for now and keep in step with Azeem1010/Dual-Arm-TEST-2.0 and Azeem1010/env_camera_vision. All branches were read; only two carried new work.
 - Dual-Arm-TEST-2.0 `e0-esp32-suction` (`3a90ba2`, `6fb080a`, the E0 result below) was fast-forwarded onto main. Its `env-scene-debug-image` branch was already merged (`52a6518`); `main` holds the 11-10/11-11 field records imported in `d2ddfae` (photos and large logs stay there); `orin-source` is an Orin snapshot whose `src` equals `3fd258c`, nothing to take.
