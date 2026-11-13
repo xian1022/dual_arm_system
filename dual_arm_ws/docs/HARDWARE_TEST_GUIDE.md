@@ -355,6 +355,8 @@ ros2 topic pub -r 5 /dual_arm/status std_msgs/msg/String "{data: '{\"active_arm\
 
 **和嚴格模式差在哪：** 馬達校正、controllers 容差、coordinator 設定都用估計值（檔頭標 `PROTOTYPE ESTIMATE`）；不要求急停心跳（D8 沒做）；吸盤結果自動確認。位置可能偏好幾公分、吸不起來都屬預期。**結果不算任何 H 階段 PASS，也不能當校正證據。**
 
+**C 格用示教關節值（2026-11-13）：** Arm 2 放置時直接到 `coordinator.yaml` 的 `c_slot_teach.raw`（11-11 H1 示教，壓著瓶蓋），不經 IK。第一次跑時先看 Arm 2 到格子上方是否對準，再看下壓高度。壓太深就加大 `release_lift_m`；某格偏了，扭力關閉扶到正確位置讀 raw，改該格那一行，再用 `python3 scripts/teach_to_slots.py --from-config` 檢查（不加這個選項時讀 11-11 的 CSV）。改完要重建 `dual_arm_coordinator`。
+
 **前置：**
 
 - 一人只守 CM-530 電源開關，手放在開關上，這是唯一的急停。

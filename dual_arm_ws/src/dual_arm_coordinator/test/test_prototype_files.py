@@ -1,12 +1,13 @@
 """The prototype settings load, stay labelled as estimates, and leave the strict files untouched."""
 import json
+import math
 from pathlib import Path
 import unittest
 
 import yaml
 
 from dual_arm_coordinator import task_config
-from dual_arm_coordinator.homes import JOINT_SUFFIXES, load_homes
+from dual_arm_coordinator.homes import JOINT_SUFFIXES, load_homes, load_slot_joints
 from dual_arm_coordinator.task_config import TaskConfigError
 
 SRC = Path(__file__).resolve().parents[2]
@@ -51,6 +52,30 @@ class PrototypeFiles(unittest.TestCase):
                 joint = data['joints'][f'{arm}_{suffix}']
                 self.assertEqual(joint['zero_raw'], runtime[arm]['raw_at_cad_zero'][index])
                 self.assertEqual(joint['direction'], runtime[arm]['direction'][index])
+
+    def test_taught_slots_round_trip_to_the_taught_counts(self):
+        """The driver turns the radians back into counts with the same file, so nothing moves."""
+        config = task_config.load(PROTOTYPE_CONFIG)
+        joints = load_slot_joints(config, calibration_path=str(PROTOTYPE_CALIBRATION))
+        self.assertEqual(joints['arm'], 'arm2')
+        data = calibration()
+        for raw, q in zip(config['c_slot_teach']['raw'], joints['release']):
+            counts = []
+            for value, suffix in zip(q, JOINT_SUFFIXES):
+                joint = data['joints'][f'arm2_{suffix}']
+                counts.append(round(joint['zero_raw'] + joint['direction'] * value * 1023 / math.radians(300)))
+            self.assertEqual(counts, raw)
+
+    def test_taught_slots_must_be_inside_the_calibration_limits(self):
+        config = task_config.load(PROTOTYPE_CONFIG)
+        config['c_slot_teach']['raw'][0] = [0, 630, 926, 602]
+        with self.assertRaisesRegex(ValueError, 'Slot 1 arm_shoulder_pan_joint count 0 is outside'):
+            load_slot_joints(config, calibration_path=str(PROTOTYPE_CALIBRATION))
+
+    def test_taught_slots_need_the_driver_calibration(self):
+        with self.assertRaisesRegex(ValueError, 'need the calibration file'):
+            load_slot_joints(task_config.load(PROTOTYPE_CONFIG))
+        self.assertIsNone(load_slot_joints({}, calibration_path=str(PROTOTYPE_CALIBRATION)))
 
     def test_prototype_files_are_labelled(self):
         for path in (PROTOTYPE_CONFIG, PROTOTYPE_CALIBRATION, PROTOTYPE_CONTROLLERS):

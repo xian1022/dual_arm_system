@@ -1,0 +1,365 @@
+[INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-24-52-732783-DESKTOP-HBTEAAO-496
+[INFO] [launch]: Default logging verbosity is set to INFO
+[INFO] [launch.user]: PROTOTYPE：估計校正、沒有急停心跳、吸盤自動確認；CM-530 電源開關是唯一急停
+[vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+  - env_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+  查詢可用裝置: ls /dev/v4l/by-id/
+  範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+  - env_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+  查詢可用裝置: ls /dev/v4l/by-id/
+  範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[INFO] [cm530_mock_serial-1]: process started with pid [513]
+[INFO] [env_scene_node-2]: process started with pid [514]
+[INFO] [env_scene_bridge-3]: process started with pid [515]
+[INFO] [arm_camera_switch-4]: process started with pid [516]
+[INFO] [coordinator_node-5]: process started with pid [517]
+[cm530_mock_serial-1] CM-530 mock serial ready on /tmp/cm530_mock_serial -> /dev/pts/2
+[INFO] [robot_state_publisher-6]: process started with pid [558]
+[INFO] [ros2_control_node-7]: process started with pid [559]
+[INFO] [spawner-8]: process started with pid [560]
+[INFO] [spawner-9]: process started with pid [561]
+[INFO] [spawner-10]: process started with pid [562]
+[INFO] [move_group_lifetime-11]: process started with pid [563]
+[robot_state_publisher-6] [INFO] [1794572702.967550823] [robot_state_publisher]: Robot initialized
+[move_group_lifetime-11] [INFO] [1794572703.225927287] [move_group.moveit.moveit.ros.rdf_loader]: Loaded robot model in 0.265422 seconds
+[move_group_lifetime-11] [INFO] [1794572703.226077032] [move_group.moveit.moveit.core.robot_model]: Loading robot model 'dual_arm'...
+[move_group_lifetime-11] [INFO] [1794572703.226092912] [move_group.moveit.moveit.core.robot_model]: No root/virtual joint specified in SRDF. Assuming fixed joint
+[move_group_lifetime-11] [INFO] [1794572703.832615777] [move_group.moveit.moveit.kinematics.kdl_kinematics_plugin]: Joint weights for group 'arm1': 1 1 1 1
+[move_group_lifetime-11] [INFO] [1794572703.833287186] [move_group.moveit.moveit.kinematics.kdl_kinematics_plugin]: Joint weights for group 'arm2': 1 1 1 1
+[coordinator_node-5] [WARN] [1794572704.185215260] [dual_arm_coordinator]: PROTOTYPE mode: estimated calibration, no e-stop heartbeat, suction auto-confirmed
+[coordinator_node-5] [WARN] [1794572704.235586203] [dual_arm_coordinator]: C slots use taught arm2 joints (docs/evidence/hardware/20261111_H1/teach_arm2_C_1..8.csv (last READ))
+[env_scene_node-2] [INFO] [1794572704.323639477] [env_scene_node]: env_scene_node 就緒；layout 檔 /home/user/.ros/vision_calib/env_scene_layout.yaml
+[move_group_lifetime-11] [INFO] [1794572704.333121991] [move_group.moveit.moveit.ros.moveit_cpp]: Listening to 'joint_states' for joint states
+[move_group_lifetime-11] [INFO] [1794572704.342159101] [move_group.moveit.moveit.ros.current_state_monitor]: Listening to joint states on topic 'joint_states'
+[move_group_lifetime-11] [INFO] [1794572704.395840598] [move_group.moveit.moveit.ros.planning_scene_monitor]: Listening to '/attached_collision_object' for attached collision objects
+[move_group_lifetime-11] [INFO] [1794572704.398517506] [move_group.moveit.moveit.ros.planning_scene_monitor]: Publishing maintained planning scene on 'monitored_planning_scene'
+[move_group_lifetime-11] [INFO] [1794572704.398736282] [move_group.moveit.moveit.ros.planning_scene_monitor]: Starting planning scene monitor
+[move_group_lifetime-11] [INFO] [1794572704.399540836] [move_group.moveit.moveit.ros.planning_scene_monitor]: Listening to '/planning_scene'
+[move_group_lifetime-11] [INFO] [1794572704.399570512] [move_group.moveit.moveit.ros.planning_scene_monitor]: Starting world geometry update monitor for collision objects, attached objects, octomap updates.
+[move_group_lifetime-11] [INFO] [1794572704.400240884] [move_group.moveit.moveit.ros.planning_scene_monitor]: Listening to 'collision_object'
+[move_group_lifetime-11] [INFO] [1794572704.400991400] [move_group.moveit.moveit.ros.planning_scene_monitor]: Listening to 'planning_scene_world' for planning scene world geometry
+[move_group_lifetime-11] [WARN] [1794572704.498490659] [move_group.moveit.moveit.ros.occupancy_map_monitor]: Resolution not specified for Octomap. Assuming resolution = 0.1 instead
+[move_group_lifetime-11] [ERROR] [1794572704.498567899] [move_group.moveit.moveit.ros.occupancy_map_monitor]: No 3D sensor plugin(s) defined for octomap updates
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-25-04-838738-DESKTOP-HBTEAAO-557
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[move_group_lifetime-11] [INFO] [1794572705.015315418] [move_group.moveit.moveit.ros.planning_pipeline]: Successfully loaded planner 'OMPL'
+[spawner-8] [INFO] [1794572705.158408248] [spawner_joint_state_broadcaster]: waiting for service /controller_manager/list_controllers to become available...
+[ros2_control_node-7] [INFO] [1794572705.313672075] [controller_manager]: Using Steady (Monotonic) clock for triggering controller manager cycles.
+[move_group_lifetime-11] [INFO] [1794572705.434557863] [move_group]: Try loading adapter 'default_planning_request_adapters/ResolveConstraintFrames'
+[move_group_lifetime-11] [INFO] [1794572705.478227011] [move_group]: Loaded adapter 'default_planning_request_adapters/ResolveConstraintFrames'
+[move_group_lifetime-11] [INFO] [1794572705.478284165] [move_group]: Try loading adapter 'default_planning_request_adapters/ValidateWorkspaceBounds'
+[move_group_lifetime-11] [INFO] [1794572705.571275701] [move_group]: Loaded adapter 'default_planning_request_adapters/ValidateWorkspaceBounds'
+[move_group_lifetime-11] [INFO] [1794572705.571322937] [move_group]: Try loading adapter 'default_planning_request_adapters/CheckStartStateBounds'
+[move_group_lifetime-11] [INFO] [1794572705.571360189] [move_group]: Loaded adapter 'default_planning_request_adapters/CheckStartStateBounds'
+[move_group_lifetime-11] [INFO] [1794572705.571364279] [move_group]: Try loading adapter 'default_planning_request_adapters/CheckStartStateCollision'
+[move_group_lifetime-11] [INFO] [1794572705.571373697] [move_group]: Loaded adapter 'default_planning_request_adapters/CheckStartStateCollision'
+[ros2_control_node-7] [INFO] [1794572705.865451963] [controller_manager]: Subscribing to '/robot_description' topic for robot description.
+[ros2_control_node-7] [INFO] [1794572705.865531602] [controller_manager]: update rate is 100 Hz
+[ros2_control_node-7] [INFO] [1794572705.865537008] [controller_manager]: Overruns handling is : enabled
+[ros2_control_node-7] [INFO] [1794572705.865540666] [controller_manager]: Spawning controller_manager RT thread with scheduler priority: 50
+[ros2_control_node-7] [WARN] [1794572705.865636012] [controller_manager]: Could not enable FIFO RT scheduling policy: with error number <1>(Operation not permitted). See [https://control.ros.org/master/doc/ros2_control/controller_manager/doc/userdoc.html] for details on how to enable realtime scheduling.
+[ros2_control_node-7] [INFO] [1794572705.876277526] [controller_manager]: Received robot description from topic.
+[ros2_control_node-7] [INFO] [1794572705.876631126] [controller_manager]: Enforcing command limits is disabled. Command limits from URDF will be ignored.
+[move_group_lifetime-11] [INFO] [1794572705.971616305] [move_group]: Try loading adapter 'default_planning_response_adapters/AddTimeOptimalParameterization'
+[move_group_lifetime-11] [INFO] [1794572706.087946485] [move_group]: Loaded adapter 'default_planning_response_adapters/AddTimeOptimalParameterization'
+[move_group_lifetime-11] [INFO] [1794572706.088000433] [move_group]: Try loading adapter 'default_planning_response_adapters/ValidateSolution'
+[move_group_lifetime-11] [INFO] [1794572706.097580098] [move_group]: Loaded adapter 'default_planning_response_adapters/ValidateSolution'
+[move_group_lifetime-11] [INFO] [1794572706.097617071] [move_group]: Try loading adapter 'default_planning_response_adapters/DisplayMotionPath'
+[move_group_lifetime-11] [INFO] [1794572706.098533696] [move_group]: Loaded adapter 'default_planning_response_adapters/DisplayMotionPath'
+[ros2_control_node-7] [INFO] [1794572706.143518565] [controller_manager]: Loading hardware 'DualArmSystem' 
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[ros2_control_node-7] [INFO] [1794572706.221077942] [controller_manager]: Loaded hardware 'DualArmSystem' from plugin 'cm530_hardware/CM530SystemInterface'
+[ros2_control_node-7] [INFO] [1794572706.221278433] [controller_manager]: Initialize hardware 'DualArmSystem' 
+[ros2_control_node-7] [INFO] [1794572706.234755492] [controller_manager]: Successful initialization of hardware 'DualArmSystem'
+[ros2_control_node-7] [INFO] [1794572706.235367379] [controller_manager]: Setting component 'DualArmSystem' to 'inactive' state.
+[ros2_control_node-7] [INFO] [1794572706.235404352] [resource_manager]: 'configure' hardware 'DualArmSystem' 
+[ros2_control_node-7] [INFO] [1794572706.442263509] [controller_manager.hardware_component.system.DualArmSystem]: CM-530 connected on /tmp/cm530_mock_serial (motion authorized)
+[ros2_control_node-7] [INFO] [1794572706.442344493] [resource_manager]: Successful 'configure' of hardware 'DualArmSystem'
+[ros2_control_node-7] [INFO] [1794572706.442415894] [controller_manager]: Registering statistics for : DualArmSystem
+[ros2_control_node-7] [INFO] [1794572706.442468824] [controller_manager]: Resource Manager has been successfully initialized. Starting Controller Manager services...
+[move_group_lifetime-11] [INFO] [1794572706.570536459] [move_group.moveit.moveit.plugins.simple_controller_manager]: Added FollowJointTrajectory controller for arm1_controller
+[move_group_lifetime-11] [INFO] [1794572706.575313340] [move_group.moveit.moveit.plugins.simple_controller_manager]: Added FollowJointTrajectory controller for arm2_controller
+[move_group_lifetime-11] [INFO] [1794572706.575482469] [move_group.moveit.moveit.plugins.simple_controller_manager]: Returned 2 controllers in list
+[move_group_lifetime-11] [INFO] [1794572706.575502439] [move_group.moveit.moveit.plugins.simple_controller_manager]: Returned 2 controllers in list
+[move_group_lifetime-11] [INFO] [1794572706.576225049] [move_group.moveit.moveit.ros.trajectory_execution_manager]: Trajectory execution is not managing controllers
+[move_group_lifetime-11] [INFO] [1794572706.576257884] [move_group]: MoveGroup debug mode is ON
+[ros2_control_node-7] [INFO] [1794572706.661325197] [controller_manager]: Loading controller : 'joint_state_broadcaster' of type 'joint_state_broadcaster/JointStateBroadcaster'
+[ros2_control_node-7] [INFO] [1794572706.661376446] [controller_manager]: Loading controller 'joint_state_broadcaster'
+[move_group_lifetime-11] [INFO] [1794572706.826290504] [move_group.moveit.moveit.ros.move_group.executable]: 
+[move_group_lifetime-11] 
+[move_group_lifetime-11] ********************************************************
+[move_group_lifetime-11] * MoveGroup using: 
+[move_group_lifetime-11] *     - apply_planning_scene_service
+[move_group_lifetime-11] *     - clear_octomap_service
+[move_group_lifetime-11] *     - get_group_urdf
+[move_group_lifetime-11] *     - load_geometry_from_file
+[move_group_lifetime-11] *     - CartesianPathService
+[move_group_lifetime-11] *     - execute_trajectory_action
+[move_group_lifetime-11] *     - get_planning_scene_service
+[move_group_lifetime-11] *     - kinematics_service
+[move_group_lifetime-11] *     - move_action
+[move_group_lifetime-11] *     - motion_plan_service
+[move_group_lifetime-11] *     - query_planners_service
+[move_group_lifetime-11] *     - state_validation_service
+[move_group_lifetime-11] *     - save_geometry_to_file
+[move_group_lifetime-11] ********************************************************
+[move_group_lifetime-11] 
+[move_group_lifetime-11] [INFO] [1794572706.826398821] [move_group.moveit.moveit.ros.move_group.context]: MoveGroup context using pipeline ompl
+[move_group_lifetime-11] [INFO] [1794572706.826407538] [move_group.moveit.moveit.ros.move_group.context]: MoveGroup context initialization complete
+[move_group_lifetime-11] [96mLoading 'move_group/ApplyPlanningSceneService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/ClearOctomapService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/GetUrdfService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/LoadGeometryFromFileService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/MoveGroupCartesianPathService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/MoveGroupExecuteTrajectoryAction'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/MoveGroupGetPlanningSceneService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/MoveGroupKinematicsService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/MoveGroupMoveAction'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/MoveGroupPlanService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/MoveGroupQueryPlannersService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/MoveGroupStateValidationService'...[0m
+[move_group_lifetime-11] [96mLoading 'move_group/SaveGeometryToFileService'...[0m
+[move_group_lifetime-11] 
+[move_group_lifetime-11] [92mYou can start planning now![0m
+[move_group_lifetime-11] 
+[ros2_control_node-7] [INFO] [1794572706.892019102] [controller_manager]: Controller 'joint_state_broadcaster' node arguments: --ros-args --params-file /mnt/e/dual_arm_system/dual_arm_ws/install/dual_arm_controllers/share/dual_arm_controllers/config/controllers_prototype.yaml --params-file /tmp/launch_params_2o95dlcr 
+[spawner-8] [INFO] [1794572706.927053158] [spawner_joint_state_broadcaster]: Loaded joint_state_broadcaster
+[ros2_control_node-7] [INFO] [1794572706.928472803] [controller_manager]: Configuring controller: 'joint_state_broadcaster'
+[ros2_control_node-7] [INFO] [1794572706.928595809] [joint_state_broadcaster]: 'joints' or 'interfaces' parameter is empty. All available state interfaces will be published
+[ros2_control_node-7] [INFO] [1794572707.048145617] [controller_manager]: Activating controllers: [ joint_state_broadcaster ]
+[ros2_control_node-7] [INFO] [1794572707.056083166] [controller_manager]: Successfully switched controllers!
+[spawner-8] [INFO] [1794572707.067275348] [spawner_joint_state_broadcaster]: Configured and activated joint_state_broadcaster
+[INFO] [spawner-8]: process has finished cleanly [pid 560]
+[ros2_control_node-7] [INFO] [1794572707.438751017] [controller_manager]: Loading controller : 'arm2_controller' of type 'joint_trajectory_controller/JointTrajectoryController'
+[ros2_control_node-7] [INFO] [1794572707.438800779] [controller_manager]: Loading controller 'arm2_controller'
+[ros2_control_node-7] [INFO] [1794572707.499837496] [controller_manager]: Controller 'arm2_controller' node arguments: --ros-args --params-file /mnt/e/dual_arm_system/dual_arm_ws/install/dual_arm_controllers/share/dual_arm_controllers/config/controllers_prototype.yaml --params-file /tmp/launch_params_2o95dlcr 
+[spawner-10] [INFO] [1794572707.808056366] [spawner_arm2_controller]: Loaded arm2_controller
+[ros2_control_node-7] [INFO] [1794572707.809754772] [controller_manager]: Configuring controller: 'arm2_controller'
+[ros2_control_node-7] [INFO] [1794572707.809924976] [arm2_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[ros2_control_node-7] [INFO] [1794572707.809971704] [arm2_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[ros2_control_node-7] [INFO] [1794572707.809996369] [arm2_controller]: Using 'splines' interpolation method.
+[ros2_control_node-7] [INFO] [1794572707.818738866] [arm2_controller]: Action status changes will be monitored at 20.00 Hz.
+[ros2_control_node-7] [INFO] [1794572707.831129478] [arm2_controller]: Setting initial scaling factor to 1.000000
+[ros2_control_node-7] [INFO] [1794572707.831166201] [arm2_controller]: No scaling interface set. This controller will not read speed scaling from the hardware.
+[INFO] [spawner-10]: process has finished cleanly [pid 562]
+[spawner-9] [INFO] [1794572709.067345317] [spawner_arm1_controller]: waiting for service /controller_manager/list_controllers to become available...
+[ros2_control_node-7] [INFO] [1794572710.335352200] [controller_manager]: Loading controller : 'arm1_controller' of type 'joint_trajectory_controller/JointTrajectoryController'
+[ros2_control_node-7] [INFO] [1794572710.335409615] [controller_manager]: Loading controller 'arm1_controller'
+[ros2_control_node-7] [INFO] [1794572710.335783688] [controller_manager]: Controller 'arm1_controller' node arguments: --ros-args --params-file /mnt/e/dual_arm_system/dual_arm_ws/install/dual_arm_controllers/share/dual_arm_controllers/config/controllers_prototype.yaml --params-file /tmp/launch_params_2o95dlcr 
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-25-10-577336-DESKTOP-HBTEAAO-722
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[spawner-9] [INFO] [1794572710.617135355] [spawner_arm1_controller]: Loaded arm1_controller
+[ros2_control_node-7] [INFO] [1794572710.619014716] [controller_manager]: Configuring controller: 'arm1_controller'
+[ros2_control_node-7] [INFO] [1794572710.619129222] [arm1_controller]: No specific joint names are used for command interfaces. Using 'joints' parameter.
+[ros2_control_node-7] [INFO] [1794572710.619155975] [arm1_controller]: Command interfaces are [position] and state interfaces are [position velocity].
+[ros2_control_node-7] [INFO] [1794572710.619167365] [arm1_controller]: Using 'splines' interpolation method.
+[ros2_control_node-7] [INFO] [1794572710.620698806] [arm1_controller]: Action status changes will be monitored at 20.00 Hz.
+[ros2_control_node-7] [INFO] [1794572710.627325818] [arm1_controller]: Setting initial scaling factor to 1.000000
+[ros2_control_node-7] [INFO] [1794572710.627360282] [arm1_controller]: No scaling interface set. This controller will not read speed scaling from the hardware.
+[INFO] [spawner-9]: process has finished cleanly [pid 561]
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-25-18-240098-DESKTOP-HBTEAAO-728
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-25-29-978568-DESKTOP-HBTEAAO-777
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-25-50-941321-DESKTOP-HBTEAAO-780
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-26-26-046257-DESKTOP-HBTEAAO-783
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-27-01-160150-DESKTOP-HBTEAAO-786
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-27-36-103949-DESKTOP-HBTEAAO-789
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-28-11-254477-DESKTOP-HBTEAAO-792
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-28-46-481776-DESKTOP-HBTEAAO-795
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-29-21-264688-DESKTOP-HBTEAAO-799
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-29-56-104428-DESKTOP-HBTEAAO-804
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-30-31-254451-DESKTOP-HBTEAAO-807
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-31-06-445188-DESKTOP-HBTEAAO-810
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-31-41-533681-DESKTOP-HBTEAAO-813
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-32-16-609682-DESKTOP-HBTEAAO-816
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-32-53-126144-DESKTOP-HBTEAAO-819
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-33-28-242068-DESKTOP-HBTEAAO-822
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch]: All log files can be found below /home/user/.ros/log/2026-11-13-20-34-03-504018-DESKTOP-HBTEAAO-825
+[arm_camera_switch-4] [INFO] [launch]: Default logging verbosity is set to INFO
+[arm_camera_switch-4] [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 校正檔目錄: /home/user/.ros/vision_calib
+[arm_camera_switch-4] [INFO] [launch.user]: [vision.launch] 以下鏡頭無法啟動（已略過 usb_cam，其他節點照常啟動）:
+[arm_camera_switch-4]   - arm1_cam: 裝置不存在 /dev/v4l/by-path/platform-3610000.usb-usb-0:4.4.3:1.0-video-index0（相機沒插好，或路徑打錯）
+[arm_camera_switch-4]   查詢可用裝置: ls /dev/v4l/by-id/
+[arm_camera_switch-4]   範例: ros2 launch vision_pkg vision.launch.py env_cam_device:=/dev/v4l/by-id/<名稱> arm1_cam_device:=... arm2_cam_device:=...

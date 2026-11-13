@@ -21,7 +21,7 @@ from .gateways.gripper import create_gripper
 from .gateways.motion import MotionGateway
 from .gateways.truth import TruthObserver, wire_truth
 from .gateways.vision import VisionPickObserver, wire_vision
-from .homes import load_homes
+from .homes import load_homes, load_slot_joints
 from .journal import Journal, config_fingerprint
 from .task_config import load
 from .workflow.ports import TaskCancelled, TaskFault, TaskIO, WorkflowSettings
@@ -54,6 +54,12 @@ class CoordinatorIO(TaskIO):
 
     def check_reachable(self, arm, xyz):
         self._motion.check_reachable(arm, xyz)
+
+    def check_slot(self, arm, slot):
+        self._motion.check_slot(arm, slot)
+
+    def move_slot(self, arm, slot, pose, contact=False):
+        self._motion.move_slot(arm, slot, pose, contact=contact)
 
     def move_home(self, arm):
         self._motion.move_home(arm)
@@ -139,7 +145,10 @@ class CoordinatorNode(Node):
         self._prefill(prefilled)
 
         homes = load_homes(self.config, runtime_path=runtime_path, calibration_path=calibration_path or None)
-        self.motion = MotionGateway(self, self.config, urdf, homes, self.guard, self.group)
+        slot_joints = load_slot_joints(self.config, calibration_path=calibration_path or None)
+        if slot_joints is not None:
+            self.get_logger().warning(f'C slots use taught {slot_joints["arm"]} joints ({self.config["c_slot_teach"]["source"]})')
+        self.motion = MotionGateway(self, self.config, urdf, homes, self.guard, self.group, slot_joints=slot_joints)
         self.observer = TruthObserver(self.config, lambda arm: self.motion.tcp_report(arm)['tcp_m'],
                                       self.motion.check_reachable, self.motion.home_tcp, prefilled)
         wire_truth(self, self.observer, self.group)

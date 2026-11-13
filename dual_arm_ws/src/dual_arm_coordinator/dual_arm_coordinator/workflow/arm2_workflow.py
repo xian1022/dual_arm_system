@@ -46,9 +46,12 @@ class Arm2Workflow:
         above_c = ctx.point(slot_xy, settings.approach_z)
         at_c = ctx.point(slot_xy, settings.release_z)
 
+        taught = settings.c_slot_joints
         ctx.step(ARM, 'PREFLIGHT')
-        for point in (above_b, at_b, above_c, at_c):
+        for point in (above_b, at_b) if taught else (above_b, at_b, above_c, at_c):
             io.check_reachable(ARM, point)
+        if taught:
+            io.check_slot(ARM, slot)
 
         ctx.step(ARM, 'RESERVE_B')
         ctx.acquire_b(ARM, view)
@@ -76,9 +79,15 @@ class Arm2Workflow:
         ctx.release_b(ARM, view)
 
         ctx.step(ARM, 'APPROACH_C')
-        io.move_to(ARM, above_c)
+        if taught:
+            io.move_slot(ARM, slot, 'above')
+        else:
+            io.move_to(ARM, above_c)
         ctx.step(ARM, 'DESCEND_C')
-        io.move_to(ARM, at_c, contact=True)
+        if taught:
+            io.move_slot(ARM, slot, 'release', contact=True)
+        else:
+            io.move_to(ARM, at_c, contact=True)
         ctx.set_holding(ARM, 'unknown')
         ctx.step(ARM, 'RELEASE_C')
         io.suction(ARM, 'release')
@@ -86,7 +95,10 @@ class Arm2Workflow:
         ctx.step(ARM, 'DETACH')
         io.detach(ARM)
         ctx.step(ARM, 'LIFT_C')
-        io.move_to(ARM, above_c, contact=True)
+        if taught:
+            io.move_slot(ARM, slot, 'above', contact=True)
+        else:
+            io.move_to(ARM, above_c, contact=True)
         ctx.step(ARM, 'HOME_EMPTY')
         io.move_home(ARM)
 

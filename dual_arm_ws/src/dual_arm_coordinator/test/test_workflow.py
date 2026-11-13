@@ -19,7 +19,7 @@ PACKAGE = Path(__file__).resolve().parents[1]
 CONFIG = yaml.safe_load((PACKAGE / 'config' / 'sim' / 'coordinator.yaml').read_text(encoding='utf-8'))
 SETTINGS = WorkflowSettings.from_config(CONFIG)
 FINGERPRINT = 'fingerprint-a'
-MOTIONS = ('move_home', 'move_to')
+MOTIONS = ('move_home', 'move_to', 'move_slot')
 
 
 class World(TaskIO):
@@ -90,6 +90,16 @@ class World(TaskIO):
         if (arm, xyz[:2]) in self.unreachable:
             raise TaskFault(f'{arm} cannot reach {xyz}')
 
+    def check_slot(self, arm, slot):
+        self._call('check_slot', arm, slot)
+        if (arm, slot) in self.unreachable:
+            raise TaskFault(f'{arm} cannot reach taught slot {slot}')
+
+    def move_slot(self, arm, slot, pose, contact=False):
+        self._call('move_slot', arm, slot, pose, contact)
+        self.position[arm] = SETTINGS.c_slots[slot - 1]
+        self._after_motion()
+
     def move_home(self, arm):
         self._call('move_home', arm)
         self.position[arm] = None
@@ -157,7 +167,7 @@ class Base(unittest.TestCase):
         self.gate = TokenGate(60.0, clock=lambda: self.time)
         if not hasattr(self, 'world'):
             self.world = World(self.path)
-        self.transfer = Transfer(self.world, SETTINGS, self.journal, self.gate)
+        self.transfer = Transfer(self.world, getattr(self, 'settings', SETTINGS), self.journal, self.gate)
 
     @property
     def state(self):
@@ -174,6 +184,34 @@ class Base(unittest.TestCase):
 
     def token(self):
         return self.gate.current[0]
+
+
+class TaughtSlots(Base):
+    """Prototype: arm 2 places at taught joint poses; arm 1 and zone B are unchanged."""
+    settings = replace(SETTINGS, c_slot_joints=True)
+
+    def test_slot_moves_use_the_taught_poses(self):
+        self.assertEqual(self.transfer.run(2), 'SUCCEEDED')
+        self.assertEqual(self.world.c, [True, True] + [False] * 6)
+        moves = [call[1:] for call in self.calls_named('move_slot')]
+        self.assertEqual(moves, [('arm2', slot, pose, contact) for slot in (1, 2)
+                                 for pose, contact in (('above', False), ('release', True), ('above', True))])
+        c_points = {call[2][:2] for call in self.calls_named('move_to')} & set(SETTINGS.c_slots)
+        self.assertEqual(c_points, set())
+
+    def test_slot_is_checked_before_taking_an_object(self):
+        self.transfer.run(1)
+        checks = [call[1:] for call in self.calls_named('check_slot')]
+        self.assertEqual(checks, [('arm2', 1), ('arm2', 1)])
+        first_check = next(index for index, call in enumerate(self.world.calls) if call[0] == 'check_slot')
+        first_grasp = next(index for index, call in enumerate(self.world.calls) if call[0] == 'suction')
+        self.assertLess(first_check, first_grasp)
+
+    def test_unreachable_taught_slot_stops_before_taking_an_object(self):
+        self.world.unreachable.add(('arm2', 1))
+        self.assert_faulted('cannot reach taught slot 1')
+        self.assertEqual(self.world.a_objects, 8)
+        self.assertEqual(self.calls_named('move_to'), [])
 
 
 class HappyPath(Base):

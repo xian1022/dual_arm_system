@@ -1,5 +1,17 @@
 # Evidence report — 2026-11-08
 
+## 2026-11-13 Prototype C slots from the taught joints
+
+Arm 2 places at the 11-11 C-slot teach counts in prototype mode. Details: evidence/slot_teach_20261113/README.md.
+
+| Check | Result | Evidence / scope |
+|---|---|---|
+| Taught-slot report, prototype config loads | PASS | teach_to_slots.txt, load_prototype.txt |
+| Unit tests coordinator / HMI | PASS | 349 / 307 |
+| Mock Serial prototype launch boots with taught slots | PASS | launch.log, steps.log; no task reaches C without cameras |
+| `move_slot` through MoveIt and controllers | NOT_RUN | |
+| Placement at the taught slots on real arms | NOT_RUN | Orin needs pull and rebuild |
+
 ## 2026-11-13 Prototype pick height 2 mm lower
 
 Prototype `heights` all 2 mm lower after the field report that the cup stopped above the cap. Details: evidence/prototype_z_20261113/README.md.

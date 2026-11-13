@@ -6,12 +6,15 @@ import numpy as np
 import yaml
 
 from dual_arm_coordinator.home_pose import convert_home
-from dual_arm_coordinator.homes import load_homes
+from dual_arm_coordinator.homes import load_homes, load_slot_joints
 from dual_arm_coordinator.kinematics import CadKinematics
-from dual_arm_coordinator.motion_math import (line_points, solve_line, tcp_error, tcp_position,
+from dual_arm_coordinator.motion_math import (MIN_SLOT_CLEARANCE_M, SLOT_APPROACH_STEP_M, joint_line, line_drift,
+                                              line_points, prepare_slot_poses, solve_line, tcp_error, tcp_position,
                                               tool_tilt_deg, trapezoid_times)
 
 PACKAGE = Path(__file__).resolve().parents[1]
+PROTOTYPE_CONFIG = PACKAGE / 'config' / 'prototype' / 'coordinator.yaml'
+PROTOTYPE_CALIBRATION = PACKAGE.parent / 'cm530_hardware' / 'config' / 'calibration_prototype.yaml'
 URDF = PACKAGE.parent / 'dual_arm_description' / 'urdf' / 'dual_arm_cad.urdf.xacro'
 RUNTIME = PACKAGE / 'config' / 'sim' / 'runtime.json'
 CALIBRATION = PACKAGE.parent / 'cm530_hardware' / 'config' / 'calibration.yaml'
@@ -205,6 +208,69 @@ class Homes(unittest.TestCase):
             load_homes(HARDWARE)
         with self.assertRaises(ValueError):
             load_homes({'mode': 'simulation', 'home_source': 'srdf'})
+
+
+class JointLines(unittest.TestCase):
+    def test_joint_line_ends_exactly_and_respects_step(self):
+        path = joint_line([0, 0, 0, 0], [0.05, -0.02, 0, 0.031], 0.01)
+        self.assertEqual(path[0], [0, 0, 0, 0])
+        np.testing.assert_allclose(path[-1], [0.05, -0.02, 0, 0.031])
+        self.assertLessEqual(np.abs(np.diff(np.array(path), axis=0)).max(), 0.01 + 1e-12)
+        self.assertEqual(len(joint_line([1, 2, 3, 4], [1, 2, 3, 4], 0.01)), 2)
+        with self.assertRaises(ValueError):
+            joint_line([0] * 4, [1] * 4, 0)
+
+    def test_drift_is_zero_on_a_straight_tcp_line_and_seen_on_a_curve(self):
+        model = CadKinematics(URDF.read_text(encoding='utf-8'), 'arm2', 9.0)
+        start = model.solve([0.13, -0.02, 0.05])
+        straight = solve_line(model, start, line_points(tcp_position(model, start), [0.13, -0.02, 0.025], 0.002), 0.15)
+        self.assertLess(line_drift(model, straight), 1e-5)
+        swing = joint_line(start, [start[0] + 0.5] + list(start[1:]), 0.01)
+        # A 0.5 rad j1 swing at about 0.13 m radius bows about 4 mm off the chord: past the 3 mm prototype limit.
+        self.assertGreater(line_drift(model, swing), 0.003)
+
+
+class SlotPoses(unittest.TestCase):
+    """The prototype's taught counts through the estimated calibration (model only)."""
+
+    @classmethod
+    def setUpClass(cls):
+        config = yaml.safe_load(PROTOTYPE_CONFIG.read_text(encoding='utf-8'))
+        cls.teach, cls.approach_z = config['c_slot_teach'], config['heights']['approach_z_m']
+        cls.taught = load_slot_joints(config, calibration_path=str(PROTOTYPE_CALIBRATION))['release']
+        cls.model = CadKinematics(URDF.read_text(encoding='utf-8'), 'arm2', config['motion']['max_tool_tilt_deg'])
+        cls.poses = prepare_slot_poses(cls.model, cls.taught, cls.teach, cls.approach_z)
+
+    def test_release_is_the_taught_pose_and_above_keeps_j1(self):
+        for slot, (q, pose) in enumerate(zip(self.taught, self.poses), start=1):
+            with self.subTest(slot=slot):
+                self.assertEqual(pose['release'], list(q))
+                self.assertAlmostEqual(pose['above'][0], q[0], places=4)
+                above = tcp_position(self.model, pose['above'])
+                np.testing.assert_allclose(above, [*pose['xy'], pose['above_z']], atol=1e-5)
+                self.assertGreaterEqual(pose['above_z'] - pose['release_z'], MIN_SLOT_CLEARANCE_M)
+
+    def test_slot_eight_approaches_lower_instead_of_tilting_further(self):
+        heights = [pose['above_z'] for pose in self.poses]
+        self.assertEqual(heights[:7], [self.approach_z] * 7)
+        self.assertAlmostEqual(heights[7], self.approach_z - SLOT_APPROACH_STEP_M)
+        self.assertLessEqual(tool_tilt_deg(self.model, self.poses[7]['above']), 9.0 + 1e-6)
+
+    def test_vertical_joint_lines_stay_within_the_configured_drift(self):
+        for slot, pose in enumerate(self.poses, start=1):
+            with self.subTest(slot=slot):
+                drift = line_drift(self.model, joint_line(pose['above'], pose['release'], 0.01))
+                self.assertLess(drift, self.teach['max_line_drift_m'])
+
+    def test_release_lift_raises_the_release_pose(self):
+        poses = prepare_slot_poses(self.model, self.taught[:1], {**self.teach, 'release_lift_m': 0.003},
+                                   self.approach_z)
+        start = tcp_position(self.model, self.taught[0])
+        np.testing.assert_allclose(tcp_position(self.model, poses[0]['release']), start + [0, 0, 0.003], atol=1e-5)
+
+    def test_too_low_approach_is_refused(self):
+        with self.assertRaisesRegex(ValueError, 'Taught slot 1: approach height'):
+            prepare_slot_poses(self.model, self.taught[:1], self.teach, self.poses[0]['release_z'] + 0.01)
 
 
 if __name__ == '__main__':

@@ -11,6 +11,8 @@
 
 ## 最新狀態（優先於以下全部內容）
 
+- 2026-11-13：使用者決定 Prototype 的 C 格改用 11-11 H1 的 arm2 示教關節值（示教時壓著瓶蓋，等於放置姿勢），不用 B 區示教。`config/prototype/coordinator.yaml` 新增 `c_slot_teach`；接近姿勢在示教點正上方（C8 降到 50 mm，沒放寬 9° 傾角）；下降與抬起走關節直線。測試與 Mock 啟動 PASS，`move_slot` 尚未在 MoveIt＋控制器上跑過，實機待測（Orin 要 pull 後重建）。見 `docs/evidence/slot_teach_20261113/`。
+
 - 2026-11-13：現場回報 Prototype 吸盤高約 2 mm、吸不到瓶蓋。Prototype 的 `heights` 整組降 2 mm（桌面 0.012、吸取 0.0223、放置 0.0233、接近 0.052），模擬與嚴格模式不變；測試通過，實機待重跑（Orin 要 pull 後重新建置）。見 `docs/evidence/prototype_z_20261113/`。
 - 2026-11-13：使用者決定先以 Prototype 為主，並和兩個上游 repo 同步。合入 Dual-Arm-TEST-2.0 `e0-esp32-suction`（E0 吸盤實測：重燒韌體、腳位 12/13/25/26、模組 arm1 1／arm2 2、`vacuum_settle_s` 2.0；斷電後要重開 agent）。env_camera_vision 換到 `6b3d5c1`（C 格依尺量 y = 45／10／−25／−60 mm），Prototype 的 `c_slots_xy_m` 跟著改，模擬不變。其餘分支已在本機或已過時，見 PROGRESS。待辦：韌體腳位修改推回 ray000518/micro-ros；env_scene 尺量標定檔只在現場機器上。
 - 2026-11-13：新增「實機 Prototype」模式（使用者決定：先讓實機跑完整流程，不要求精準、吸不到也可以；急停只有 CM-530 電源開關，D8 不做）。coordinator `mode: prototype`、三份標 `PROTOTYPE ESTIMATE` 的估計設定檔、`hardware_prototype.launch.py`、`hardware.launch.py` 的 `require_estop`、操作介面新模式。嚴格模式不變。操作步驟見 HARDWARE_TEST_GUIDE「Prototype 模式」；證據 `docs/evidence/prototype_mode_20261113/`。實機尚未跑。

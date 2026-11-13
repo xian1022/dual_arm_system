@@ -70,7 +70,11 @@ class Transfer:
     def _preflight_next_slot(self):
         """Stop before taking an object that could not be delivered, so none is stranded in B."""
         settings = self.ctx.settings
-        slot_xy = settings.c_slots[self.ctx.occupied().index(False)]
+        slot = self.ctx.occupied().index(False) + 1
+        if settings.c_slot_joints:
+            self.io.check_slot('arm2', slot)
+            return
+        slot_xy = settings.c_slots[slot - 1]
         for height in (settings.approach_z, settings.release_z):
             self.io.check_reachable('arm2', self.ctx.point(slot_xy, height))
 

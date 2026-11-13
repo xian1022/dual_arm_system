@@ -55,6 +55,26 @@ zones:
     - [0.170, -0.025]
     - [0.135, -0.060]
     - [0.170, -0.060]
+# Taught C slots (user decision 2026-11-13): arm 2 places at these joint counts instead of
+# c_slots_xy_m. Last READ of each teach_arm2_C_<n>.csv, torque off, hand-guided with the cup
+# pressing a cap in the slot, so each pose is the release pose. The counts go through
+# calibration_prototype.yaml both ways, so the motors get exactly these counts. c_slots_xy_m
+# still names the slots for the cameras. Report: scripts/teach_to_slots.py.
+c_slot_teach:
+  arm: arm2
+  source: docs/evidence/hardware/20261111_H1/teach_arm2_C_1..8.csv (last READ)
+  raw:                         # j1, j2, j3, j4; C1 and C2 were unsteady while taught
+    - [572, 630, 926, 602]
+    - [635, 636, 906, 600]
+    - [560, 645, 885, 596]
+    - [608, 666, 838, 629]
+    - [549, 701, 767, 664]
+    - [587, 721, 724, 694]
+    - [540, 779, 602, 758]
+    - [576, 803, 557, 760]
+  release_lift_m: 0.0          # raise the release pose if the cup presses too hard
+  arrival_tolerance_raw: 4
+  max_line_drift_m: 0.003      # model drift of the vertical joint line is 0.7..1.8 mm
 motion:
   planning_s: 10.0
   planning_attempts: 3

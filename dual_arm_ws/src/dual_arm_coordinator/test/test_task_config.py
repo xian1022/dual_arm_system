@@ -181,6 +181,60 @@ class Validation(unittest.TestCase):
         self.assert_refused(doc, 'planning_attempts must be an integer')
 
 
+def slot_teach():
+    return {'arm': 'arm2', 'source': 'test', 'raw': [[512, 600, 700, 600 + slot] for slot in range(8)],
+            'release_lift_m': 0.0, 'arrival_tolerance_raw': 4, 'max_line_drift_m': 0.003}
+
+
+class SlotTeach(unittest.TestCase):
+    def assert_refused(self, doc, text):
+        with self.assertRaises(TaskConfigError) as caught:
+            task_config.validate(doc)
+        self.assertIn(text, str(caught.exception))
+
+    def with_teach(self, doc=None, **change):
+        doc = doc or prototype_doc()
+        doc['c_slot_teach'] = {**slot_teach(), **change}
+        return doc
+
+    def test_prototype_accepts_taught_slots(self):
+        self.assertIn('c_slot_teach', task_config.validate(self.with_teach()))
+
+    def test_documents_without_teach_still_load(self):
+        self.assertNotIn('c_slot_teach', task_config.validate(prototype_doc()))
+
+    def test_only_prototype_may_teach(self):
+        self.assert_refused(self.with_teach(sim_doc()), "c_slot_teach is only allowed in ('prototype',)")
+
+    def test_only_arm2_places_in_c(self):
+        self.assert_refused(self.with_teach(arm='arm1'), 'c_slot_teach.arm must be arm2')
+
+    def test_shape_and_unknown_keys(self):
+        doc = self.with_teach()
+        del doc['c_slot_teach']['source']
+        doc['c_slot_teach']['extra'] = 1
+        self.assert_refused(doc, 'c_slot_teach.source is missing')
+        self.assert_refused(doc, 'c_slot_teach.extra is not a known setting')
+
+    def test_null_is_not_measured(self):
+        self.assert_refused(self.with_teach(release_lift_m=None), 'c_slot_teach.release_lift_m is not measured')
+
+    def test_raw_poses(self):
+        raw = slot_teach()['raw']
+        self.assert_refused(self.with_teach(raw=raw[:7]), 'must list 8 poses of four counts')
+        self.assert_refused(self.with_teach(raw=raw[:7] + [[1, 2, 3]]), 'must list 8 poses of four counts')
+        for bad in (1024, -1, 512.0, True):
+            with self.subTest(bad=bad):
+                self.assert_refused(self.with_teach(raw=raw[:7] + [[bad, 2, 3, 4]]),
+                                    'counts must be integers in 0..1023')
+
+    def test_number_ranges(self):
+        self.assert_refused(self.with_teach(release_lift_m=0.03), 'release_lift_m must be within [0, 0.02]')
+        self.assert_refused(self.with_teach(arrival_tolerance_raw=0), 'arrival_tolerance_raw must be an integer')
+        self.assert_refused(self.with_teach(arrival_tolerance_raw=2.5), 'arrival_tolerance_raw must be an integer')
+        self.assert_refused(self.with_teach(max_line_drift_m=0), 'max_line_drift_m must be within (0, 0.01]')
+
+
 class CommandLine(unittest.TestCase):
     def run_main(self, *args):
         output = io.StringIO()

@@ -1,0 +1,4 @@
+check_docs exit=0
+summary: docs/evidence/slot_teach_20261113/t0/summary.tsv
+step        exit  seconds  log
+check_docs  0     7        docs/evidence/slot_teach_20261113/t0/check_docs.log

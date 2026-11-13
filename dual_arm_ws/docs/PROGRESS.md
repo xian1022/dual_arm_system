@@ -2,7 +2,13 @@
 
 Current status by work package is in MODIFICATION_PLAN.md section 6. Each section below records one result at the time it was made, so later sections supersede what older ones list as not run.
 
-## Latest result: prototype pick height 2 mm lower
+## Latest result: prototype C slots from the taught joints
+
+- 2026-11-13, user decision: in prototype mode arm 2 places at the 2026-11-11 H1 C-slot teach readings (`teach_arm2_C_1..8.csv`, last READ; the cup was pressing a cap in the slot, so each is the release pose) instead of `c_slots_xy_m` through IK. B-zone teach readings are not used; A and B are unchanged; simulation and strict hardware unchanged.
+- New optional `c_slot_teach` block (prototype only) in `config/prototype/coordinator.yaml`; `homes.load_slot_joints` converts the counts with the calibration file the driver uses, so the motors receive exactly the taught counts. Approach is straight above in the model at `approach_z` (slot 8: 50 mm, since 52 mm needs more than the 9° tilt limit, which was not widened); descent and lift are joint-space lines refused beyond 3 mm model drift; arrival is every joint within 4 counts. `scripts/teach_to_slots.py` reports the poses: the taught points sit 6–10 mm from `c_slots_xy_m`.
+- Coordinator 349 and HMI 307 tests pass; Mock Serial prototype launch boots with the taught slots (evidence/slot_teach_20261113/). `move_slot` has not run through MoveIt and the controllers (no camera in the mock, so no task reaches C); real arms NOT_RUN.
+
+## Earlier result: prototype pick height 2 mm lower
 
 - 2026-11-13, field report: on the real arms the cup stopped about 2 mm above the cap and could not pick it. Prototype `heights` all 2 mm lower: surface 0.012, contact 0.0223, release 0.0233, approach 0.052 (cap height unchanged; lowering only the contact would break the "cap top <= contact" check). Simulation and strict hardware unchanged.
 - Config loads; coordinator 328 and HMI 307 tests pass (evidence/prototype_z_20261113/). Not rerun on the real arms.

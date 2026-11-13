@@ -21,10 +21,40 @@ def _from_runtime(path):
             for arm in ARMS}
 
 
-def _from_calibration(path):
+def _read_calibration(path):
     data = yaml.safe_load(Path(path).read_text(encoding='utf-8'))
     if data.get('status') != 'PASS' or data.get('evidence_kind') != 'physical' or data.get('hardware_use_allowed') is not True:
         raise ValueError('HOME needs a calibration with status PASS, physical evidence and hardware use allowed')
+    return data
+
+
+def load_slot_joints(config, calibration_path=None):
+    """Taught C-slot joints in radians, or None when the config has no c_slot_teach.
+
+    The counts go through the same calibration file as the driver, which turns
+    the radians back into exactly the taught counts; a wrong zero cannot move them.
+    """
+    teach = config.get('c_slot_teach')
+    if teach is None:
+        return None
+    if calibration_path is None:
+        raise ValueError('Taught slot joints need the calibration file the driver uses')
+    data = _read_calibration(calibration_path)
+    arm = teach['arm']
+    joints = [data['joints'][f'{arm}_{suffix}'] for suffix in JOINT_SUFFIXES]
+    poses = []
+    for slot, raw in enumerate(teach['raw'], start=1):
+        for count, joint, suffix in zip(raw, joints, JOINT_SUFFIXES):
+            if not joint['min_raw'] <= count <= joint['max_raw']:
+                raise ValueError(f'Slot {slot} {suffix} count {count} is outside '
+                                 f'{joint["min_raw"]}..{joint["max_raw"]} of the calibration')
+        poses.append(convert_home(raw, [joint['zero_raw'] for joint in joints],
+                                  [joint['direction'] for joint in joints]))
+    return {'arm': arm, 'release': poses}
+
+
+def _from_calibration(path):
+    data = _read_calibration(path)
     homes = {}
     for arm in ARMS:
         joints = [data['joints'][f'{arm}_{suffix}'] for suffix in JOINT_SUFFIXES]

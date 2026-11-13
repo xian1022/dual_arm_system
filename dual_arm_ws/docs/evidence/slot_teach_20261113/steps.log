@@ -1,0 +1,5 @@
+== nodes
+/arm_camera_switch
+== status
+data: '{"active_arm": "", "at_home": {"arm1": false, "arm2": false}, "b_owner": "", "busy": false, "completed": 0, "config_fingerprint"...'
+---

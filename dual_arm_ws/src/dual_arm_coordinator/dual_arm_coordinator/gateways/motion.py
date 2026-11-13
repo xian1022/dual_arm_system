@@ -21,7 +21,8 @@ from shape_msgs.msg import SolidPrimitive
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 from ..kinematics import CadKinematics
-from ..motion_math import line_points, solve_line, tcp_error, tcp_position, tool_tilt_deg, trapezoid_times
+from ..motion_math import (joint_line, line_drift, line_points, prepare_slot_poses, solve_line, tcp_error,
+                           tcp_position, tool_tilt_deg, trapezoid_times)
 from ..workflow.ports import TaskFault
 
 ARMS = ('arm1', 'arm2')
@@ -29,6 +30,10 @@ _GOAL_JOINT_TOLERANCE = 1e-5
 _B_OBJECT = 'cap_in_b'
 # CadKinematics accepts straight-down solutions within about 0.26 deg.
 _STRAIGHT_DOWN_DEG = 0.5
+# AX-12A: 300 degrees over 1023 counts, as in home_pose.py and cm530_hardware.
+_RAD_PER_COUNT = math.radians(300.0) / 1023.0
+# Joint-line sampling for taught slot moves; small enough that the drift check sees the path.
+_JOINT_LINE_STEP_RAD = 0.01
 
 
 def _duration(seconds):
@@ -37,7 +42,7 @@ def _duration(seconds):
 
 
 class MotionGateway:
-    def __init__(self, node, config, urdf_text, homes, guard, callback_group=None):
+    def __init__(self, node, config, urdf_text, homes, guard, callback_group=None, slot_joints=None):
         if config['target_frame'] != 'world':
             raise ValueError('MotionGateway targets must be in the world frame')
         self._node, self._guard = node, guard
@@ -45,6 +50,12 @@ class MotionGateway:
         self._speeds, self._arms = config['speeds'], config['arms']
         self._homes = homes
         self._models = {arm: CadKinematics(urdf_text, arm, self._cfg['max_tool_tilt_deg']) for arm in ARMS}
+        # Taught C slots (prototype): joint targets instead of xy, see homes.load_slot_joints.
+        self._teach, self._slot_arm, self._slot_poses = config.get('c_slot_teach'), None, None
+        if slot_joints is not None:
+            self._slot_arm = slot_joints['arm']
+            self._slot_poses = prepare_slot_poses(self._models[self._slot_arm], slot_joints['release'], self._teach,
+                                                  self._heights['approach_z_m'])
         self._lock = threading.Lock()
         self._joints, self._sequence, self._received = {}, 0, 0.0
         self._attached = dict.fromkeys(ARMS, False)
@@ -280,6 +291,79 @@ class MotionGateway:
                                       controller_names=[self._arms[arm]['controller']])
         self._run_action(self._execute, goal, label)
 
+    # --- taught C slots (prototype) ---
+
+    def _slot(self, arm, slot):
+        if self._slot_poses is None:
+            raise TaskFault('No taught slot joints are configured')
+        if arm != self._slot_arm:
+            raise TaskFault(f'Slots were taught with {self._slot_arm}, not {arm}')
+        if not 1 <= slot <= len(self._slot_poses):
+            raise TaskFault(f'Slot {slot} is out of range')
+        return self._slot_poses[slot - 1]
+
+    def slot_xy(self, slot):
+        """Where a cap in this slot sits: the taught pose when slots are taught, else the configured xy."""
+        if self._slot_poses is not None:
+            return self._slot_poses[slot - 1]['xy']
+        return tuple(self._zones['c_slots_xy_m'][slot - 1])
+
+    def check_slot(self, arm, slot):
+        poses = self._slot(arm, slot)
+        for name in ('above', 'release'):
+            self._require_valid(arm, poses[name], f'{arm} slot {slot} {name}')
+
+    def move_slot(self, arm, slot, pose, contact=False):
+        """pose 'above' or 'release'. A contact move is a joint-space line from the current
+        joints, refused when the tool would leave the straight TCP segment by more than
+        max_line_drift_m; otherwise MoveIt plans to the joints."""
+        target = self._slot(arm, slot)[pose]
+        label = f'{arm} slot {slot} {pose}'
+        if contact:
+            self._move_joint_line(arm, target, label)
+        else:
+            self._require_valid(arm, target, label)
+            self._plan_and_move(arm, target, label)
+        self._confirm_joints(arm, target, label)
+
+    def _move_joint_line(self, arm, target, label):
+        model = self._models[arm]
+        path = joint_line(self.current(arm), target, _JOINT_LINE_STEP_RAD)
+        drift, limit = line_drift(model, path), self._teach['max_line_drift_m']
+        if drift > limit:
+            raise TaskFault(f'{label}: the joint line leaves the straight path by {drift:.4f} m (limit {limit} m)')
+        for q in path[1:]:
+            self._require_valid(arm, q, label)
+        times = trapezoid_times(path, self._cfg['max_velocity_rad_s'] * self._speeds['contact_scale'],
+                                self._cfg['max_acceleration_rad_s2'] * self._speeds['acceleration_scale'])
+        if not times:
+            return
+        trajectory = JointTrajectory(joint_names=list(model.names), points=[
+            JointTrajectoryPoint(positions=[float(value) for value in q], time_from_start=_duration(stamp))
+            for q, stamp in zip(path, times)])
+        goal = ExecuteTrajectory.Goal(trajectory=RobotTrajectory(joint_trajectory=trajectory),
+                                      controller_names=[self._arms[arm]['controller']])
+        self._run_action(self._execute, goal, label)
+
+    def _confirm_joints(self, arm, target, label):
+        """Like _confirm_arrival, but every joint within arrival_tolerance_raw counts of the taught pose."""
+        needed = self._cfg['arrival_samples']
+        limit = self._teach['arrival_tolerance_raw'] * _RAD_PER_COUNT
+        stable, seen, error = 0, -1, float('inf')
+        deadline = time.monotonic() + self._cfg['arrival_timeout_s']
+        while time.monotonic() < deadline:
+            self._guard()
+            q, sequence, _ = self._sample(arm)
+            if q is not None and sequence != seen:
+                seen = sequence
+                error = max(abs(a - b) for a, b in zip(q, target))
+                stable = stable + 1 if error <= limit else 0
+                if stable >= needed:
+                    return
+            time.sleep(0.005)
+        raise TaskFault(f'{label}: {arm} did not settle within {self._teach["arrival_tolerance_raw"]} counts, '
+                        f'last error {error / _RAD_PER_COUNT:.1f} counts')
+
     # --- planning scene ---
 
     def _apply(self, scene, label):
@@ -372,5 +456,4 @@ class MotionGateway:
         self._b_object_present = False
 
     def scene_add_slot_object(self, slot):
-        self._apply_world([self._world_cap(f'cap_in_slot_{slot}', self._zones['c_slots_xy_m'][slot - 1])],
-                          f'add slot {slot} object')
+        self._apply_world([self._world_cap(f'cap_in_slot_{slot}', self.slot_xy(slot))], f'add slot {slot} object')
