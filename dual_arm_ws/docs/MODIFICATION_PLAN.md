@@ -228,6 +228,6 @@ AI 不可自行執行，要由現場人員明確要求並完成出力前檢查�
 | WP9 安全監控 | `PASS` | `docs/evidence/wp9/` | MoveIt mock 驗證，C29 由 22 秒縮短到約 1.2 秒。這是軟體互鎖，不取代實體急停。`hardware.launch.py` 在 `enable_motion` 時自動帶上；啟動時若心跳尚未到達會先鎖定，需 `/safety/reset`。實機與 Gazebo 物理 `NOT_RUN`，實機急停心跳來源尚未存在 |
 | WP10 操作工具 | `PASS` | `docs/evidence/wp10/` | Mock Serial 與 MoveIt mock。`manual_xy` 是命令列工具，WP1 定義的 `ManualXY.srv` 目前沒有使用者。實機校正工作表的門檻等 D6。2026-11-10 新增 `fit_axis_circle`（畫圓找 j1 軸心，只產生報告），單元測試 PASS，實際量測 `NOT_RUN` |
 | WP11 幾何碰撞 | `NOT_RUN` | `docs/evidence/phase_c_20261111/` | 場地幾何已依 2026-11-11 實測更新（階段 C，D3）：板 600×240 mm、軸心在板外 5 mm（另一次量到 15 mm；2026-11-12 使用者決定採用 5 mm）、格位與編號；模型檢查、t1、t2 已重跑。驗證過的碰撞模型（平台、泡棉、相機支架）尚未建立。格位位移研究是舊配置的工具，已從 t1 移除 |
-| WP12 ESP32 | `PASS` | `docs/evidence/wp12/` | 後端以替身節點驗證。真正的 ESP32 `NOT_RUN`，模組對應、真空時間等現場確認項目見 `ORIN_DEPLOYMENT.md` 第 6.1 節 |
+| WP12 ESP32 | `PASS` | `docs/evidence/wp12/` | 後端以替身節點驗證。2026-11-13 E0 實機 PASS（模組 arm1 1／arm2 2、`vacuum_settle_s` 2.0、回音逾時 2.0），斷電重連 FAIL（要重開 agent），見 `evidence/hardware/20261113_E0/`；韌體腳位的本地修改還沒推回 ray000518/micro-ros |
 | WP13 文件 | `PASS` | `docs/evidence/wp13/` | `TEST_PLAN.md`、`ORIN_DEPLOYMENT.md`、`ROS_INTERFACES.md`；部署步驟尚未實際執行 |
-| H0～H8 | 見 `evidence/hardware/` | `docs/evidence/hardware/` | 由現場人員執行。2026-11-11：P0、H0 `PASS`，H1、V0 進行中，E0、H2、H3 `NOT_RUN`，H4 以後 `BLOCKED`（D8 未實作） |
+| H0～H8 | 見 `evidence/hardware/` | `docs/evidence/hardware/` | 由現場人員執行。2026-11-11：P0、H0 `PASS`，H1、V0 進行中，H2、H3 `NOT_RUN`（E0 2026-11-13 已做，見上方 WP12），H4 以後 `BLOCKED`（D8 未實作） |

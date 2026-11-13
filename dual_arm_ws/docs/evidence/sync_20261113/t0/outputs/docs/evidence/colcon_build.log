@@ -1,0 +1,9 @@
+Starting >>> vision_interfaces
+Starting >>> env_scene_interfaces
+[  1%] Built target env_scene_interfaces__rosidl_generator_type_description
+[  0%] Built target vision_interfaces__rs
+[  3%] Built target env_scene_interfaces__rs
+[  1%] Built target vision_interfaces__rosidl_generator_type_description
+[  3%] Built target ament_cmake_python_symlink_env_scene_interfaces
+[  5%] Built target env_scene_interfaces__cpp
+[ 25%] Built target env_scene_interfaces__rosidl_generator_c

@@ -14,7 +14,7 @@
 | CM-530 驅動程式、安全監控 | 僅模擬測試 | 已用韌體原始碼的 Mock Serial 與 MoveIt mock 測試，**還沒接過實機** |
 | 八個物體完整搬運 | 未完成 | 目前模型只搆得到 4 個瓶蓋、7 個 C 格 |
 | 視覺自動定位 | 部分 | 模擬中 Arm 1 取料點可由視覺決定；區域與格位還沒接，實體相機尚未校正 |
-| ESP32 吸盤 | 僅模擬測試 | 程式完成，只用替身節點測過。韌體沒有真空感測，吸取結果要人工確認 |
+| ESP32 吸盤 | E0 實測 | 2026-11-13 在 Orin 確認指令對應（1、2 arm1，3、4 arm2）與約 1 秒吸穩，韌體腳位改為 12/13/25/26。韌體沒有真空感測，吸取結果要人工確認（Prototype 自動確認）；斷電後要重開 agent |
 | 操作介面 | 模擬可用 | 啟動／關閉系統、開始工作、取消、強制停止、解除鎖定、回 HOME、復歸，見 5 節「用操作介面」。實機模式只接通強制停止，上扭力與吸盤確認還沒做；還沒在 Orin 開過視窗 |
 | Jetson Orin | 部分實測 | 2026-11-10 已在 AGX Orin 安裝、建置，離線測試、Mock 與 CM-530 唯讀連線都 PASS；實機動作仍未放行 |
 
@@ -357,7 +357,7 @@ dual_arm_system/
 | `dual_arm_interfaces` | 操作用的服務定義 |
 | `dual_arm_gripper` | Gazebo 吸盤（ESP32 後端在 coordinator 的 gripper gateway） |
 | `vision_pkg`、`vision_interfaces` | 三相機視覺（模擬；實機手臂鏡頭只監控） |
-| `env_scene`、`env_scene_interfaces` | 環境相機 A/B/C 判斷與框線影像 `/vision/env/debug_image`（上游 env_camera_vision，暫用 6b059eb，另加本地的框線影像發布） |
+| `env_scene`、`env_scene_interfaces` | 環境相機 A/B/C 判斷與框線影像 `/vision/env/debug_image`（上游 env_camera_vision 6b3d5c1，另加本地的框線影像發布） |
 | `dual_arm_vision_adapter` | 校正有效性狀態、手臂鏡頭輪流切換、env_scene 顯示橋接 |
 | `cm530_hardware` | CM-530 實機驅動 |
 | `dual_arm_hmi` | 操作介面（PyQt5） |

@@ -1,0 +1,17 @@
+ M ../README.md
+ M README.md
+ M docs/ARCHITECTURE.md
+ M docs/COORDINATE_FRAMES.md
+ M docs/HARDWARE_TEST_GUIDE.md
+ M docs/MODIFICATION_PLAN.md
+ M docs/PROGRESS.md
+ M docs/RESUME.md
+ M docs/sources.lock.json
+ M src/dual_arm_coordinator/config/prototype/coordinator.yaml
+ M src/env_scene/env_scene/scene_core.py
+ m third_party/CM530_ROS_BRIDGE
+ m third_party/dual_arm_3d
+ M third_party/env_camera_vision
+ m third_party/phantomx_pincher
+ m third_party/three-camera-vision-ros2
+?? docs/evidence/sync_20261113/

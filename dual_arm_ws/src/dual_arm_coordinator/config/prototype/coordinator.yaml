@@ -41,15 +41,17 @@ zones:
   a_max_xy_m: [-0.10, 0.12]
   b_place_xy_m: [0.0, 0.0]
   b_pick_tolerance_m: 0.05     # simulation 0.02
+  # Field ruler measurement 2026-11-13 (env_camera_vision 6b3d5c1): slot 1 front edge 75 mm,
+  # so the whole grid sits 5 mm toward the user from the simulation (y 0.050/0.015/-0.020/-0.055).
   c_slots_xy_m:
-    - [0.135, 0.050]
-    - [0.170, 0.050]
-    - [0.135, 0.015]
-    - [0.170, 0.015]
-    - [0.135, -0.020]
-    - [0.170, -0.020]
-    - [0.135, -0.055]
-    - [0.170, -0.055]
+    - [0.135, 0.045]
+    - [0.170, 0.045]
+    - [0.135, 0.010]
+    - [0.170, 0.010]
+    - [0.135, -0.025]
+    - [0.170, -0.025]
+    - [0.135, -0.060]
+    - [0.170, -0.060]
 motion:
   planning_s: 10.0
   planning_attempts: 3

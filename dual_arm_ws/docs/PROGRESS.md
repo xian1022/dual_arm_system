@@ -2,7 +2,15 @@
 
 Current status by work package is in MODIFICATION_PLAN.md section 6. Each section below records one result at the time it was made, so later sections supersede what older ones list as not run.
 
-## Latest result: E0 ESP32 suction check on the Orin
+## Latest result: sync with the two upstream repos (prototype first)
+
+- 2026-11-13. User decision: work on the prototype mode for now and keep in step with Azeem1010/Dual-Arm-TEST-2.0 and Azeem1010/env_camera_vision. All branches were read; only two carried new work.
+- Dual-Arm-TEST-2.0 `e0-esp32-suction` (`3a90ba2`, `6fb080a`, the E0 result below) was fast-forwarded onto main. Its `env-scene-debug-image` branch was already merged (`52a6518`); `main` holds the 11-10/11-11 field records imported in `d2ddfae` (photos and large logs stay there); `orin-source` is an Orin snapshot whose `src` equals `3fd258c`, nothing to take.
+- env_camera_vision `main` = `calib/c-slot-positions` = `6b3d5c1`: C slot rows y 45/10/-25/-60 mm from a field ruler measurement (slot 1 front edge 75 mm; the grid sits 5 mm toward the user from the simulation). Submodule and `src/env_scene/scene_core.py` updated, the local debug-image change kept; sources.lock.json updated. Upstream still uses the field centre as origin: the black-frame field version mentioned on 11-12 was never pushed.
+- Prototype `c_slots_xy_m` now uses the measured rows; simulation keeps 0.050/0.015/-0.020/-0.055, strict hardware stays null. Coordinator reads only occupancy by slot index from env_scene, so the placement coordinates come from this file.
+- Checks: see evidence/sync_20261113/.
+
+## Earlier result: E0 ESP32 suction check on the Orin
 
 - 2026-11-13, physical (evidence/hardware/20261113_E0/). The ESP32 had an older single-cup firmware (`esp32_suction_node`, `/suction_cmd` Bool); reflashed from ray000518/micro-ros `0c28c7f` with a local pin change for the new wiring (pump/valve 12/13 and 25/26; upstream is still 4/5/18/19). ORIN_DEPLOYMENT 6.1 gives the reflash steps.
 - PASS: echoes for 1–4; commands 1/2 act on arm1 and 3/4 on arm2; both cups hold a cap in about 1 s (on-site estimate) and drop it on release; no pump or valve movement on two boots (GPIO12 is a strapping pin). FAIL: after a power loss the ESP32 does not reconnect until the agent is restarted (firmware tries once).

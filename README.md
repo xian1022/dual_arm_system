@@ -38,8 +38,8 @@ git clone --recurse-submodules https://github.com/xian1022/dual_arm_system.git
 | 兩物體 A→B→C 搬運（coordinator） | ✅ 模擬可用，含故障停止與人工復歸；區域與格位判斷用 Gazebo 真實座標 |
 | CM-530 驅動、軟體安全監控 | 🟡 只測過 Mock Serial 與 MoveIt mock，還沒接實機 |
 | 八物體完整搬運 | ❌ 未完成，目前模型只搆得到 4 個瓶蓋、7 個 C 格 |
-| 視覺自動定位 | 🟡 模擬中取料點可由視覺決定。實機改由環境相機（env_scene）判斷 A/B/C，手臂鏡頭只監控並輪流開；程式已完成，env_scene 暫用上游 6b059eb，等現場版與 Orin 驗證；2026-11-13 起操作介面顯示 env_scene 的框線影像 |
-| ESP32 吸盤 | 🟡 程式完成，只用替身節點測過，還沒接實機 |
+| 視覺自動定位 | 🟡 模擬中取料點可由視覺決定。實機改由環境相機（env_scene）判斷 A/B/C，手臂鏡頭只監控並輪流開；程式已完成，env_scene 用上游 6b3d5c1（2026-11-13 現場尺量的 C 格位置），等 Orin 驗證；2026-11-13 起操作介面顯示 env_scene 的框線影像 |
+| ESP32 吸盤 | 🟡 2026-11-13 E0 在 Orin 實測：重燒韌體（腳位 12/13/25/26），指令 1、2 是 arm1、3、4 是 arm2，約 1 秒吸穩；斷電後要重開 agent 才會重連；還沒在搬運流程中使用，見 [E0 紀錄](dual_arm_ws/docs/evidence/hardware/20261113_E0/record.md) |
 | 操作介面 | 🟡 模擬中可啟停系統、開始、取消、強制停止、回 HOME、復歸；嚴格實機模式只接通強制停止，尚未在 Orin 開過 |
 | 實機 Prototype | 🟡 2026-11-13 新增：用估計校正讓實機跑完整流程（不要求精準），介面選「實機 Prototype」或 `hardware_prototype.launch.py`；只測過 Mock Serial，結果不算校正證據，見 [實機測試手冊](dual_arm_ws/docs/HARDWARE_TEST_GUIDE.md#prototype-模式) |
 | Orin 部署 | 🟡 2026-11-10 已在 Orin 安裝、建置並通過離線測試與 Mock；唯讀連線 PASS，手動方向確認只做完 Arm 1 |
@@ -99,7 +99,7 @@ flowchart TD
     RC --> HW[CM-530 驅動]
     HW --> MOTOR[八顆 AX-12A]
     GRIP --> SIMG[Gazebo 吸附]
-    GRIP -.只測過替身節點.-> ESP[ESP32 micro-ROS]
+    GRIP -.E0 實測過指令與吸放.-> ESP[ESP32 micro-ROS]
 ```
 
 ## 三相機畫面

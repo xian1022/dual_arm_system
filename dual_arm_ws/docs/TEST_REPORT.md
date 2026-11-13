@@ -1,5 +1,17 @@
 # Evidence report — 2026-11-08
 
+## 2026-11-13 Sync with Dual-Arm-TEST-2.0 (E0) and env_camera_vision 6b3d5c1
+
+E0 suction commits fast-forwarded; env_scene at `6b3d5c1` with the local overlay kept; prototype C slots at the measured rows. Details: evidence/sync_20261113/README.md.
+
+| Check | Result | Evidence / scope |
+|---|---|---|
+| E0 ESP32 suction on the Orin (field) | PASS, reconnect FAIL | evidence/hardware/20261113_E0/record.md |
+| t0 docs check | PASS | sync_20261113/t0 |
+| t1: model, build, HOME, IK, unit tests coordinator / HMI / vision, HOME collision | PASS | sync_20261113/t1; 328 / 307 / 104 tests |
+| env_scene upstream tests at 6b3d5c1 | PASS | 10 tests; env_scene_pytest.log |
+| Prototype placement at the new C slots on real arms | NOT_RUN | reach of y -0.060 not checked on hardware |
+
 ## 2026-11-13 Hardware prototype mode
 
 Real arms on estimated settings, switchable from the operator UI (`mode: prototype`, `hardware_prototype.launch.py`). Details: evidence/prototype_mode_20261113/README.md.

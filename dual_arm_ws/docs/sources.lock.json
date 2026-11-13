@@ -21,8 +21,8 @@
   },
   "env_camera_vision": {
     "url": "https://github.com/Azeem1010/env_camera_vision.git",
-    "commit": "6b059eb0d67ac27437139998f1f4fbbaeddd363d",
+    "commit": "6b3d5c132fbd90f0fdd7dbf280dc9982865c2d2f",
     "branch": "main",
-    "note": "2026-11-12 imported before the field version (zone A coordinates from the black frame) was pushed; update when it is. 2026-11-13 local change in src/env_scene (52a6518): publish the overlay on /vision/env/debug_image; carry it over when updating"
+    "note": "2026-11-12 imported at 6b059eb; 2026-11-13 updated to 6b3d5c1 (C slots y 45/10/-25/-60 from the field ruler measurement; branch calib/c-slot-positions is the same commit). Upstream still uses the field centre as origin; the black-frame field version was never pushed. 2026-11-13 local change in src/env_scene (52a6518): publish the overlay on /vision/env/debug_image; carry it over when updating"
   }
 }
